@@ -22,4 +22,7 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: microblogger_production
+  username: microblogger
+  password: <%= ENV['MICROBLOGGER_DATABASE_PASSWORD'] %>
+
