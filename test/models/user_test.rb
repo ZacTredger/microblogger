@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
   def setup
     @user = User.new(name: 'Example user', email: 'user@example.com',
                      password: 'foobarbaz', password_confirmation: 'foobarbaz')
@@ -32,7 +31,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'valid emails are accepted' do
-    valid_addresses = %w[user@example.com 
+    valid_addresses = %w[user@example.com
                          USER@foo.COM
                          A_US-ER@foo.bar.org
                          first.last@foo.jp
@@ -43,7 +42,7 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test "invalid emails are rejected" do
+  test 'invalid emails are rejected' do
     invalid_addresses = %w[user@example,com
                            user_at_foo.org
                            user.name@example.
@@ -88,5 +87,9 @@ class UserTest < ActiveSupport::TestCase
   test 'rejects if password and confirmation differ' do
     @user.password_confirmation += '+'
     assert @user.invalid?
+  end
+
+  test 'authenticated? returns false for user with nil remember_digest' do
+    refute @user.authenticated?('')
   end
 end

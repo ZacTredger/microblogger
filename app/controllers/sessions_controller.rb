@@ -3,24 +3,22 @@ class SessionsController < ApplicationController
 
   def create
     session_params = whitelist_session_params
-    user = User.find_by(email: session_params[:email].downcase)
-    if user&.authenticate(session_params[:password])
-      log_in(user)
-      redirect_to user
+    @user = User.find_by(email: session_params[:email].downcase)
+    if @user&.authenticate(session_params[:password])
+      accept_user session_params
     else
-      flash.now[:danger] = 'Invalid email/password combination'
-      render :new
+      reject_user
     end
   end
 
   def destroy
-    log_out
+    log_out if logged_in?
     redirect_to root_url
   end
 
   private
 
   def whitelist_session_params
-    params.require(:session).permit(:email, :password)
+    params.require(:session).permit(:email, :password, :remember_me)
   end
 end
