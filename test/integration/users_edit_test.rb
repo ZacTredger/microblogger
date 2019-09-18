@@ -6,6 +6,15 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     @other_user = users(:SecondUser)
   end
 
+  test 'redirects to login when not logged-in but then continues after login' do
+    get edit_user_path(@user)
+    refute flash.empty?
+    assert_redirected_to login_path
+    log_in_as @user
+    assert_redirected_to edit_user_path(@user)
+    refute session[:forwarding_url]
+  end
+
   test 'rejects invalid details and re-renders edit page' do
     log_in_as @user
     get edit_user_path(@user)
@@ -33,12 +42,6 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     @user.reload
     assert_equal name, @user.name
     assert_equal email, @user.email
-  end
-
-  test 'redirects to login page when edit page requested without log-in' do
-    get edit_user_path(@user)
-    refute flash.empty?
-    assert_redirected_to login_path
   end
 
   test 'redirects to login page when user-update requested without log-in' do
