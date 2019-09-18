@@ -201,3 +201,7 @@ input {
     border-bottom: 1px solid $gray-lighter;
   }
 }
+
+.pagination .previous_page.disabled {
+  display: none;
+}
