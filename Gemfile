@@ -8,6 +8,7 @@ gem 'bootstrap-sass'
 gem 'rails'
 # Use bcrypt to hash passwords
 gem 'bcrypt'
+gem 'faker'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets
