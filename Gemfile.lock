@@ -58,6 +58,8 @@ GEM
     bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
       sassc (>= 2.0.0)
+    bootstrap-will_paginate (1.0.0)
+      will_paginate
     builder (3.2.3)
     byebug (11.0.1)
     codeclimate-engine-rb (0.4.1)
@@ -249,6 +251,7 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+    will_paginate (3.1.8)
 
 PLATFORMS
   ruby
@@ -257,6 +260,7 @@ DEPENDENCIES
   bcrypt
   bootsnap
   bootstrap-sass
+  bootstrap-will_paginate
   byebug
   coffee-rails
   faker
@@ -281,6 +285,7 @@ DEPENDENCIES
   tzinfo-data
   uglifier
   web-console
+  will_paginate
 
 RUBY VERSION
    ruby 2.6.0p0
