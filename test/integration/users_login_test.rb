@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersLoginTest < ActionDispatch::IntegrationTest
   def setup
-    @user = users(:User1)
+    @user = users(:FirstUser)
   end
 
   test 'Rejects invalid login with unregistered email and flashes once' do

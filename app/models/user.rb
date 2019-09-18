@@ -2,7 +2,7 @@
 class User < ApplicationRecord
   attr_reader :remember_token
   has_secure_password
-  validates :password, presence: true, length: { minimum: 8 }
+  validates :password, presence: true, length: { minimum: 8 }, allow_nil: true
   validates :name, presence: true, length: { maximum: 63 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@([a-z\d\-]+\.)+[a-z]+\z/i.freeze
   validates :email, presence: true, length: { maximum: 255 },
