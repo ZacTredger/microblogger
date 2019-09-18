@@ -4,3 +4,7 @@ FirstUser:
   name: First User
   email: em@i.l
   password_digest: <%= User.digest('password') %>
+SecondUser:
+  name: Second User
+  email: email@l.so
+  password_digest: <%= User.digest('password') %>

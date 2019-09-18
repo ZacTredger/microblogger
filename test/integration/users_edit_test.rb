@@ -3,6 +3,7 @@ require 'test_helper'
 class UsersEditTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:FirstUser)
+    @other_user = users(:SecondUser)
   end
 
   test 'rejects invalid details and re-renders edit page' do
@@ -45,5 +46,19 @@ class UsersEditTest < ActionDispatch::IntegrationTest
                                               email: @user.email } }
     refute flash.empty?
     assert_redirected_to login_path
+  end
+
+  test 'redirects to root when one user requests edit-page of another' do
+    log_in_as @user
+    get edit_user_path(@other_user)
+    refute flash.empty?
+    assert_redirected_to root_url
+  end
+
+  test "redirects to root when one user tries to update another's profile" do
+    log_in_as @user
+    patch user_path(@other_user)
+    refute flash.empty?
+    assert_redirected_to root_url
   end
 end

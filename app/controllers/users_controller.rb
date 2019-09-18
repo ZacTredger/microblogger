@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: %i[edit update]
+  before_action :correct_user, only: %i[edit update]
   def show
     @user = User.find(params[:id])
   end
@@ -18,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params.permit(:id)[:id])
+    @user = User.find(params[:id])
   end
 
   def update
@@ -43,6 +44,14 @@ class UsersController < ApplicationController
     return if logged_in?
 
     flash[:danger] = 'Please log in.'
-    redirect_to login_url
+    redirect_to login_path
+  end
+
+  # Confirms the logged-in user is the same as the user whose page it is
+  def correct_user
+    return if current_user?(User.find(params[:id]))
+
+    flash[:danger] = 'You were not authorized to access that page.'
+    redirect_to root_url
   end
 end
