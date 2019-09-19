@@ -22,4 +22,21 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
                             admin: true } }
     refute @other_user.reload.admin?
   end
+
+  test 'redirects destroy to login page when user is not logged-in' do
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    refute flash.empty?
+    assert_redirected_to login_path
+  end
+
+  test 'redirects destroy to root when user is not an admin' do
+    log_in_as @other_user
+    assert_no_difference 'User.count' do
+      delete user_path(@user)
+    end
+    refute flash.empty?
+    assert_redirected_to root_url
+  end
 end

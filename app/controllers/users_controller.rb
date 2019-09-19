@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i[edit update index]
+  before_action :logged_in_user, only: %i[edit update index destroy]
   before_action :correct_user, only: %i[edit update]
+  before_action :admin_user, only: :destroy
   def index
     @users = User.paginate(page: params[:page])
   end
@@ -34,6 +35,12 @@ class UsersController < ApplicationController
     redirect_to @user
   end
 
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = 'User deleted'
+    redirect_to users_url
+  end
+
   private
 
   def user_params
@@ -55,6 +62,14 @@ class UsersController < ApplicationController
   # Confirms the logged-in user is the same as the user whose page it is
   def correct_user
     return if current_user?(User.find(params[:id]))
+
+    flash[:danger] = 'You were not authorized to access that page.'
+    redirect_to root_url
+  end
+
+  # Confirm user is an admin.
+  def admin_user
+    return if current_user.admin?
 
     flash[:danger] = 'You were not authorized to access that page.'
     redirect_to root_url
