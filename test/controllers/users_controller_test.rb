@@ -11,6 +11,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to login_path
   end
 
+  test 'redirects to root if page is of unactivated user' do
+    get user_path(User.find_by(activated: false))
+    assert_redirected_to root_url
+  end
+
   test "user can't patch themself admin rights" do
     log_in_as(@other_user)
     refute @other_user.admin?, 'test must be run on non-admin user'

@@ -6,15 +6,17 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     @non_admin = users(:SecondUser)
   end
 
-  test 'index includes pagination & has delete links (except self) for admin' do
+  test 'index has paginated, activated & deleteable users for admin' do
     log_in_as(@admin)
     get users_path
     assert_template 'users/index'
     assert_select 'div.pagination', count: 2
     User.paginate(page: 1).each do |user|
+      count = user.activated? ? 1 : 0
       path = user_path(user)
-      assert_select 'a[href=?]', path, text: user.name
-      assert_select 'a[href=?]', path, text: 'delete' unless user == @admin
+      assert_select 'a[href=?]', path, text: user.name, count: count
+      assert_select 'a[href=?]', path, text: 'delete', count: count unless
+        user == @admin
     end
   end
 

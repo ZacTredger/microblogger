@@ -1,8 +1,8 @@
 module SessionsHelper
   # Credentials accepted; log in user, create session and redirect to user-page.
-  def accept_user(session_params)
+  def accept_user(remember_me)
     log_in @user
-    session_params[:remember_me] == '1' ? remember(@user) : forget(@user)
+    remember_me == '1' ? remember(@user) : forget(@user)
     redirect_back
   end
 
@@ -10,6 +10,13 @@ module SessionsHelper
   def reject_user
     flash.now[:danger] = 'Invalid email/password combination'
     render :new
+  end
+
+  # If user's account needs to be activated
+  def remind_to_activate
+    flash[:warning] = 'You need to activate your account. Check your email for'\
+      ' the activation link.'
+    redirect_to root_url
   end
 
   # Returns user ID. Pass a definite user.

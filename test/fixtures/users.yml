@@ -19,8 +19,6 @@ ThirdUser:
   name: Third User
   email: third@example.com
   password_digest: <%= User.digest('password') %>
-  activated: true
-  activated_at: <%= Time.zone.now %>
 
 FourthUser:
   name: Fourth User
