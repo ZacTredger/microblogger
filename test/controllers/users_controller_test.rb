@@ -10,4 +10,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get users_path
     assert_redirected_to login_path
   end
+
+  test "user can't patch themself admin rights" do
+    log_in_as(@other_user)
+    refute @other_user.admin?, 'test must be run on non-admin user'
+    patch user_path(@other_user),
+          params: { user: { name: @other_user.name,
+                            email: @other_user.email,
+                            password: 'password',
+                            password_confirmation: 'password',
+                            admin: true } }
+    refute @other_user.reload.admin?
+  end
 end
