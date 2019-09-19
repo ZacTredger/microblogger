@@ -80,6 +80,6 @@ class User < ApplicationRecord
   def create_activation_digest
     klass = self.class
     @activation_token = klass.new_token
-    self.activation_digest = klass.digest(@activation_token)
+    assign_attributes(activation_digest: klass.digest(@activation_token))
   end
 end
