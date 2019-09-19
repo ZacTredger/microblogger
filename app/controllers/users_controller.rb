@@ -18,9 +18,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     return (render :new) unless @user.save
 
-    log_in @user
-    flash[:success] = 'Welcome to Microblogger!'
-    redirect_to @user
+    UserMailer.account_activation(@user).deliver_now
+    flash[:info] = 'We have sent you an account activation email.'
+    redirect_to root_url
   end
 
   def edit
