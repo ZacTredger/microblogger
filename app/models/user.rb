@@ -1,7 +1,7 @@
 # Models a site user
 class User < ApplicationRecord
   attr_accessor :activation_token
-  attr_reader :remember_token
+  attr_reader :remember_token, :reset_token
   before_create :create_activation_digest
   before_save :downcase_email
   has_secure_password
@@ -66,6 +66,22 @@ class User < ApplicationRecord
 
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
+  end
+
+  # Sets instance var: reset token, and attributes for reset digest & time
+  def create_reset_digest
+    @reset_token = User.new_token
+    update_attributes(reset_digest: User.digest(reset_token),
+                      reset_sent_at: Time.zone.now)
+  end
+
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  # True if password reset was sent over 2 hours ago
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
   private
