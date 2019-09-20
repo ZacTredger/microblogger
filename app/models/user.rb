@@ -1,7 +1,6 @@
 # Models a site user
 class User < ApplicationRecord
-  attr_accessor :activation_token
-  attr_reader :remember_token, :reset_token
+  attr_reader :remember_token, :reset_token, :activation_token
   before_create :create_activation_digest
   before_save :downcase_email
   has_secure_password
