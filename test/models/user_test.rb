@@ -92,4 +92,12 @@ class UserTest < ActiveSupport::TestCase
   test 'authenticated? returns false for user with nil remember_digest' do
     refute @user.authenticated?('')
   end
+
+  test 'associated posts are destroyed when the user is' do
+    @user.save
+    @user.posts.create!(content: 'lorem ipsum')
+    assert_difference 'Post.count', -1 do
+      @user.destroy
+    end
+  end
 end
