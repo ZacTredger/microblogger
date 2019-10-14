@@ -34,6 +34,19 @@ class PostsInterfaceTestTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 
+  test 'deletion of non-existent post redirects safely' do
+    assert_no_difference 'Post.count' do
+      delete post_path(unused_post_id)
+    end
+    assert_response :redirect
+  end
+
+  test "can't see delete links for other user's posts" do
+    log_in_as(@other_user)
+    get user_path(@user)
+    assert_select 'a', text: 'delete', count: 0
+  end
+
   private
 
   def prepare_to_post
@@ -45,6 +58,10 @@ class PostsInterfaceTestTest < ActionDispatch::IntegrationTest
     prepare_to_post
     assert ? assert_post_post : post_post
     follow_redirect!
+    return unless assert
+  
+    assert_match @content, response.body
+    assert_select 'a[href=?]', post_path(latest_post), text: 'delete'
   end
 
   def assert_post_post
@@ -55,5 +72,14 @@ class PostsInterfaceTestTest < ActionDispatch::IntegrationTest
 
   def post_post
     post posts_path, params: { post: { content: @content } }
+  end
+
+  def unused_post_id
+    used = Post.pluck(:id)
+    1.upto(Float::INFINITY).detect { |n| !used.include?(n) }
+  end
+
+  def latest_post
+    @user.posts.order(created_at: :desc).limit(1)[0]
   end
 end

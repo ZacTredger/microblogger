@@ -84,6 +84,11 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  # Defines a feed containing the user's post history
+  def feed
+    posts
+  end
+
   private
 
   # Callbacks

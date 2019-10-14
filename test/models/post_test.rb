@@ -28,6 +28,6 @@ class PostTest < ActiveSupport::TestCase
   end
 
   test 'orders post with most-recent first' do
-    assert_equal posts(:most_recent), Post.first
+    assert_equal posts(:most_recent), users(:FirstUser).posts.first
   end
 end

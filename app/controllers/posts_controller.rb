@@ -7,13 +7,15 @@ class PostsController < ApplicationController
       flash[:success] = 'Post created'
       redirect_to root_url
     else
+      load_feed
       render 'static_pages/home'
     end
   end
 
   def destroy
     @post.destroy
-    redirect_to root_path
+    flash[:success] = 'Post deleted'
+    redirect_back(fallback_location: root_path)
   end
 
   private
@@ -26,6 +28,9 @@ class PostsController < ApplicationController
   # Confirm requesting user is the post's owner
   def correct_user
     @post = Post.find_by(id: params[:id])
-    super(user_id: @post.user_id)
+    return super(user_id: @post.user_id) if @post
+
+    flash[:danger] = 'Post does not exist!'
+    redirect_to root_path
   end
 end

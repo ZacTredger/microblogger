@@ -7,5 +7,5 @@ def random_short_lorem
 end
 
 def random_created_at
-  rand(50).weeks.ago
+  rand(1..4000).hours.ago
 end

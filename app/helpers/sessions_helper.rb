@@ -3,7 +3,7 @@ module SessionsHelper
   def accept_user(remember_me)
     log_in @user
     remember_me == '1' ? remember(@user) : forget(@user)
-    redirect_back
+    redirect_back_after_login
   end
 
   # Credentials rejected; (re-)render new and flash error.
@@ -61,7 +61,7 @@ module SessionsHelper
   end
 
   # Redirects to stored location (or to a default)
-  def redirect_back(default: user_path(@user))
+  def redirect_back_after_login(default: user_path(@user))
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
   end

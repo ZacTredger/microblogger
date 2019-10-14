@@ -6,4 +6,8 @@ module ApplicationHelper
 
     page_name + ' | ' + base_title
   end
+
+  def load_feed
+    @feed_items = current_user.feed.paginate(page: params[:page])
+  end
 end
