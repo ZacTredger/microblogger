@@ -6,7 +6,7 @@ ruby '2.6.0'
 gem 'bootstrap-sass'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
-# Use bcrypt to hash passwords
+# Use ActiveModel has_secure_password
 gem 'bcrypt'
 gem 'faker'
 # Use Puma as the app server
@@ -22,6 +22,11 @@ gem 'uglifier'
 gem 'bootstrap-will_paginate'
 gem 'will_paginate'
 
+# Image uploading
+gem 'carrierwave'
+# Use ActiveStorage variant
+gem 'mini_magick'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails'
 gem 'jquery-rails'
@@ -31,11 +36,6 @@ gem 'turbolinks'
 gem 'jbuilder'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt'
-
-# Use ActiveStorage variant
-# gem 'mini_magick'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -54,11 +54,11 @@ group :development, :test do
 end
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  # Access an interactive console on exception pages or by calling 'console'
   gem 'listen'
   gem 'reek'
   gem 'rubocop'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Run app in background to speed up dev. Docs: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen'
   gem 'web-console'
@@ -73,6 +73,7 @@ group :test do
 end
 
 group :production do
+  gem 'fog'
   gem 'pg'
 end
 
