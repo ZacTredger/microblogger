@@ -151,6 +151,9 @@ GEM
     pry-byebug (3.7.0)
       byebug (~> 11.0)
       pry (~> 0.10)
+    pry-doc (1.0.0)
+      pry (~> 0.11)
+      yard (~> 0.9.11)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
     psych (3.1.0)
@@ -257,6 +260,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
     will_paginate (3.1.8)
+    yard (0.9.20)
 
 PLATFORMS
   ruby
@@ -278,6 +282,7 @@ DEPENDENCIES
   pg
   pry
   pry-byebug
+  pry-doc
   pry-rails
   puma
   rails
