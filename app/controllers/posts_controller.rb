@@ -5,9 +5,9 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
     if @post.save
       flash[:success] = 'Post created'
-      redirect_to root_path
+      redirect_to root_url
     else
-      render root_path
+      render 'static_pages/home'
     end
   end
 
