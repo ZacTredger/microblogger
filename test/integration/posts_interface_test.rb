@@ -6,6 +6,7 @@ class PostsInterfaceTestTest < ActionDispatch::IntegrationTest
     @other_user = users(:SecondUser)
     @post = posts(:orange)
     @content = 'lorem ipsum'
+    @picture = %w[test/fixtures/kitten.jpg image/jpeg]
   end
 
   test 'invalid post attempts re-render and displays errors' do
@@ -65,13 +66,18 @@ class PostsInterfaceTestTest < ActionDispatch::IntegrationTest
   end
 
   def assert_post_post
-    assert_select 'form[action=?]', posts_path
+    assert_select 'div.pagination'
+    assert_select 'form[action=?]', posts_path do |form|
+      assert_select form, 'input[type=file]'
+    end
     assert_difference('Post.count', 1) { post_post }
     assert_redirected_to root_path
   end
 
   def post_post
-    post posts_path, params: { post: { content: @content } }
+    post posts_path,
+         params: { post: { content: @content,
+                           picture: fixture_file_upload(*@picture) } }
   end
 
   def unused_post_id

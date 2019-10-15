@@ -4,4 +4,16 @@
     <%= f.text_area :content, placeholder: 'Compose new post...' %>
   </div>
   <%= f.submit 'Post', class: 'btn btn-primary' %>
+  <span class="picture">
+    <%= f.file_field :picture, accept: 'image/jpeg,image/png,image/gif' %>
+  </span>
 <% end %>
+
+<script type="text/javascript">
+  $('#post_picture').bind('change', function() {
+    var size_in_magabytes = this.files[0].size/1024/1024;
+    if (size_in_magabytes > 5) {
+      alert('Maximum filesize is 5Mb. Please choose a smaller file.');
+    }
+  })
+</script>
