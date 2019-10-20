@@ -71,7 +71,7 @@ class User < ApplicationRecord
   # Sets instance var: reset token, and attributes for reset digest & time
   def create_reset_digest
     @reset_token = User.new_token
-    update_attributes(reset_digest: User.digest(reset_token),
+    update(reset_digest: User.digest(reset_token),
                       reset_sent_at: Time.zone.now)
   end
 
