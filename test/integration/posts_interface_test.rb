@@ -36,9 +36,11 @@ class PostsInterfaceTestTest < ActionDispatch::IntegrationTest
   end
 
   test 'deletion of non-existent post redirects safely' do
+    log_in_as(@user)
     assert_no_difference 'Post.count' do
       delete post_path(unused_post_id)
     end
+    assert flash[:danger]
     assert_response :redirect
   end
 
@@ -81,8 +83,7 @@ class PostsInterfaceTestTest < ActionDispatch::IntegrationTest
   end
 
   def unused_post_id
-    used = Post.pluck(:id)
-    1.upto(Float::INFINITY).detect { |n| !used.include?(n) }
+    Post.maximum(:id) + 1
   end
 
   def latest_post

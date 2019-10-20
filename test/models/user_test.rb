@@ -100,4 +100,9 @@ class UserTest < ActiveSupport::TestCase
       @user.destroy
     end
   end
+
+  test 'hashes passwords with sufficient cost when in production' do
+    ActiveModel::SecurePassword.min_cost = false
+    assert User.send(:hash_cost) >= 12
+  end
 end

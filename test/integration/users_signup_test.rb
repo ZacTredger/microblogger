@@ -24,14 +24,16 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     assert_difference 'User.count', 1 do
       post users_path, params: { user: { name: 'Example User',
                                          email: 'ex@mp.le',
-                                         password: 'password1',
-                                         password_confirmation: 'password1' } }
+                                         password: 'password',
+                                         password_confirmation: 'password' } }
     end
     assert_equal 1, ActionMailer::Base.deliveries.size
     user = assigns(:user)
     refute user.activated?
     # Try to log in before activation
     log_in_as user
+    assert flash[:warning]
+    assert_response :redirect
     refute logged_in?
     # Try submitting invalid activation token
     get edit_account_activation_path('invalid token', email: user.email)
