@@ -1,6 +1,6 @@
 require 'active_support/core_ext/string'
 # Defines the matching rules for Guard.
-guard :minitest, spring: 'bin/rails test', all_on_start: false do
+guard :minitest, spring: 'bin/rails test', all_on_start: false, env: { 'NOCOV' => true } do
   watch(%r{^test/(.*)/?(.*)_test\.rb$})
   watch('test/test_helper.rb') { 'test' }
   watch('config/routes.rb') { interface_tests }

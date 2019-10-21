@@ -30,8 +30,14 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Ignor Spring files
+# Ignore Spring files
 /spring/*.pid
 
 # Ignore files uploaded to the local server in dev
 /public/uploads/**
+
+# Ignore coverage results from SimpleCov
+/coverage/**
+
+# Keep working drafts of commit messages in:
+draft_commit_comment.txt

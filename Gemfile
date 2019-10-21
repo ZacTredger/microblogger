@@ -70,6 +70,7 @@ group :test do
   gem 'minitest'
   gem 'minitest-reporters'
   gem 'rails-controller-testing'
+  gem 'simplecov', require: false
 end
 
 group :production do
