@@ -32,3 +32,6 @@
 
 # Ignor Spring files
 /spring/*.pid
+
+# Ignore files uploaded to the local server in dev
+/public/uploads/**
