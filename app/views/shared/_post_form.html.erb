@@ -3,10 +3,11 @@
   <div class="field">
     <%= f.text_area :content, placeholder: 'Compose new post...' %>
   </div>
-  <%= f.submit 'Post', class: 'btn btn-primary' %>
   <span class="picture">
+    <%= f.label :picture, 'Add an image'%>
     <%= f.file_field :picture, accept: 'image/jpeg,image/png,image/gif' %>
   </span>
+  <%= f.submit 'Post', class: 'btn btn-primary' %>
 <% end %>
 
 <script type="text/javascript">
