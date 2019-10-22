@@ -1,41 +1,39 @@
-# Ruby on Rails Tutorial sample application
+# Microblogger
 
-This is the sample application for
-[*Ruby on Rails Tutorial:
-Learn Web Development with Rails*](https://www.railstutorial.org/)
+This application was built as an excercise in developing with Ruby on Rails, following guidance in the book
+[*Ruby on Rails Tutorial: Learn Web Development with Rails*](https://www.railstutorial.org/)
 by [Michael Hartl](http://www.michaelhartl.com/).
 
-## License
+## [Visit the site](https://microblogger-dfe-application.herokuapp.com/)
 
-All source code in the [Ruby on Rails Tutorial](https://www.railstutorial.org/)
-is available jointly under the MIT License and the Beerware License. See
-[LICENSE.md](LICENSE.md) for details.
-
-## Getting started
-
-To get started with the app, clone the repo and then install the needed gems:
-
+## Installation
+First clone the repo and then install the needed gems (without production):
 ```
+$ cd /path/to/repos
+$ git clone https://github.com/HerrHemd/microblogger.git microblogger
+$ cd microblogger
 $ bundle install --without production
 ```
 
 Next, migrate the database:
-
 ```
 $ rails db:migrate
 ```
 
 Finally, run the test suite to verify that everything is working correctly:
-
 ```
 $ rails test
 ```
 
 If the test suite passes, you'll be ready to run the app in a local server:
-
 ```
 $ rails server
 ```
 
-For more information, see the
-[*Ruby on Rails Tutorial* book](https://www.railstutorial.org/book).
+## Roadmap
+- Ability for users to follow one-another (with their posts appearing in your feed)
+- Update feeds with AJAX
+
+## License
+
+All source code in this app is under the MIT License. Use of code from the original [Ruby on Rails Tutorial](https://www.railstutorial.org/) will require inclusion of a copyright notice. See [LICENSE.md](LICENSE.md) for details.
