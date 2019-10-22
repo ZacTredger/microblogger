@@ -2,12 +2,19 @@
   <h1>Welcome to Microblogger</h1>
 
   <h2>
-    This is the home page for the
-    <a href="https://www.railstutorial.org/">Ruby on Rails Tutorial</a>
-    Microblogger.
+    Built by 
+    <a href="https://github.com/HerrHemd">HerrHemd</a>
+    as an excercise in Ruby on Rails, with the guidance of the venerable
+    <a href="http://www.michaelhartl.com/">Michael Hartl</a>
   </h2>
 
-  <%= link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary" %>
+  <div class="d-flex flex-column">
+    <%= link_to 'Sign up now!', signup_path, class: "btn btn-lg btn-primary" %>
+    <%= link_to 'or borrow a sample account',
+                login_path(@sample_user.id,
+                           session: { email: @sample_user.email, password: 'password' }),
+                method: :post, class: "btn btn-lg btn-success" %>  
+  </div>
 </div>
 
 <%= link_to image_tag("rails.png", alt: "Rails logo"),

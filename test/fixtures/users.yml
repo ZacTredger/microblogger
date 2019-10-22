@@ -2,7 +2,7 @@
 
 FirstUser:
   name: First User
-  email: em@i.l
+  email: example@railstutorial.org
   password_digest: <%= User.digest('password') %>
   admin: true
   activated: true

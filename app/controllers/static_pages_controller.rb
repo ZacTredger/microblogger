@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    return unless logged_in?
+    return (@sample_user = User.first) unless logged_in?
 
     @post = current_user.posts.build
     load_feed
