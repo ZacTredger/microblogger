@@ -61,7 +61,7 @@ module SessionsHelper
   end
 
   # Redirects to stored location (or to a default)
-  def redirect_back_after_login(default: user_path(@user))
+  def redirect_back_after_login(default: root_path)
     redirect_to(session[:forwarding_url] || default)
     session.delete(:forwarding_url)
   end
