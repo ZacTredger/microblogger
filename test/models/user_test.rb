@@ -105,4 +105,15 @@ class UserTest < ActiveSupport::TestCase
     ActiveModel::SecurePassword.min_cost = false
     assert User.send(:hash_cost) >= 12
   end
+
+  test 'users follow and unfollow eachother' do
+    first = users(:FirstUser)
+    second = users(:SecondUser)
+    refute first.following?(second)
+    first.follow(second)
+    assert first.following?(second)
+    assert second.followers.include?(first)
+    first.unfollow(second)
+    refute first.following?(second)
+  end
 end

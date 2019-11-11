@@ -2,6 +2,14 @@
 class User < ApplicationRecord
   attr_reader :remember_token, :reset_token, :activation_token
   has_many :posts, dependent: :destroy
+  has_many :active_relationships, class_name: 'Relationship',
+                                  foreign_key: 'follower_id',
+                                  dependent: :destroy
+  has_many :passive_relationships, class_name: 'Relationship',
+                                   foreign_key: 'followed_id',
+                                   dependent: :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships
   before_create :create_activation_digest
   before_save :downcase_email
   has_secure_password
@@ -72,7 +80,7 @@ class User < ApplicationRecord
   def create_reset_digest
     @reset_token = User.new_token
     update(reset_digest: User.digest(reset_token),
-                      reset_sent_at: Time.zone.now)
+           reset_sent_at: Time.zone.now)
   end
 
   def send_password_reset_email
@@ -87,6 +95,21 @@ class User < ApplicationRecord
   # Defines a feed containing the user's post history
   def feed
     posts
+  end
+
+  # Test whether this user is following a given user
+  def following?(other_user)
+    following.include?(other_user)
+  end
+
+  # Follow a given user
+  def follow(other_user)
+    following << other_user
+  end
+
+  # Ensure this user is not following a given user
+  def unfollow(other_user)
+    following.delete(other_user)
   end
 
   private
