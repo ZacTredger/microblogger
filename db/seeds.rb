@@ -26,3 +26,9 @@ users = User.take(5)
                        created_at: random_created_at)
   end
 end
+
+# Following relationships
+users = User.all
+user  = users.first
+users[2..50].each { |followed| user.follow(followed) }
+users[3..40].each { |follower| follower.follow(user) }

@@ -108,7 +108,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'users follow and unfollow eachother' do
     first = users(:FirstUser)
-    second = users(:SecondUser)
+    second = users(:FourthUser)
     refute first.following?(second)
     first.follow(second)
     assert first.following?(second)

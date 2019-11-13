@@ -44,4 +44,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     refute flash.empty?
     assert_redirected_to root_url
   end
+
+  test 'redirects following request from guest' do
+    get following_user_path(@user)
+    assert_redirected_to login_url
+  end
+
+  test 'redirects followers request from guest' do
+    get followers_user_path(@user)
+    assert_redirected_to login_url
+  end
 end
