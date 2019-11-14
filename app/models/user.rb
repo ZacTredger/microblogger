@@ -92,9 +92,12 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  # Defines a feed containing the user's post history
+  # All posts from everyone the user follows (and theirself)
   def feed
-    posts
+    following_ids = 'SELECT followed_id FROM relationships WHERE follower_id'\
+                    ' = :user_id'
+    Post.where("user_id IN (#{following_ids}) OR user_id = :user_id",
+               user_id: id)
   end
 
   # Test whether this user is following a given user

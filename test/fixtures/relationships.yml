@@ -9,3 +9,7 @@ two:
 three:
   follower: SecondUser
   followed: FirstUser
+
+four:
+  follower: SecondUser
+  followed: FourthUser

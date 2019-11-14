@@ -3,20 +3,25 @@ orange:
   created_at: <%= 10.minutes.ago %>
   user: FirstUser
 
-tau_manifesto:
-  content: "Check out the @tauday site by @mhartl: http://tauday.com"
-  created_at: <%= 3.years.ago %>
-  user: FirstUser
-
-cat_video:
-  content: "Sad cats are sad: http://youtu.be/PKffm2uI4dk"
-  created_at: <%= 2.hours.ago %>
-  user: FirstUser
-
 most_recent:
   content: "Writing a short test"
   created_at: <%= Time.zone.now %>
   user: FirstUser
+
+tau_manifesto:
+  content: "Check out the @tauday site by @mhartl: http://tauday.com"
+  created_at: <%= 3.years.ago %>
+  user: SecondUser
+
+cat_video:
+  content: "Sad cats are sad: http://youtu.be/PKffm2uI4dk"
+  created_at: <%= 2.hours.ago %>
+  user: ThirdUser
+
+virtue_signal:
+  content: "Just held a door open for a woman #idoitformentoo"
+  created_at: <%= 1.hours.ago %>
+  user: FourthUser
 
 <% require_relative '../../db/helpers.rb' %>
 <% (1..30).each do |n| %>

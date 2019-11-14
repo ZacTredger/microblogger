@@ -31,11 +31,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'valid emails are accepted' do
-    valid_addresses = %w[user@example.com
-                         USER@foo.COM
-                         A_US-ER@foo.bar.org
-                         first.last@foo.jp
-                         alice+bob@baz.cn]
+    valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
+                         first.last@foo.jp alice+bob@baz.cn]
     valid_addresses.each do |valid_address|
       @user.email = valid_address
       assert @user.valid?, "#{valid_address.inspect} should be valid"
@@ -43,12 +40,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'invalid emails are rejected' do
-    invalid_addresses = %w[user@example,com
-                           user_at_foo.org
-                           user.name@example.
-                           foo@bar_baz.com
-                           foo@bar+baz.com
-                           foo@bar...com]
+    invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
+                           foo@bar_baz.com foo@bar+baz.com foo@bar...com]
     invalid_addresses.each do |invalid_address|
       @user.email = invalid_address
       assert @user.invalid?, "#{invalid_address.inspect} should be invalid"
@@ -115,5 +108,17 @@ class UserTest < ActiveSupport::TestCase
     assert second.followers.include?(first)
     first.unfollow(second)
     refute first.following?(second)
+  end
+
+  test 'feed has the right posts' do
+    follower = users(:SecondUser)
+    followed = users(:FourthUser)
+    not_followed = users(:ThirdUser)
+    # Contains posts from followed user
+    followed.posts.each { |post| assert_includes follower.feed, post }
+    # Contains own posts
+    follower.posts.each { |post| assert_includes follower.feed, post }
+    # Does not contain posts of unfollowed user
+    not_followed.posts.each { |post| refute_includes follower.feed, post }
   end
 end
