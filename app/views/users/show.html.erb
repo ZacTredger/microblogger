@@ -12,6 +12,11 @@
     </section>
   </aside>
   <div class="col-md-8">
+    <% if logged_in? %>
+      <%= render 'follow_form' %>
+    <% else %>
+      <%= link_to 'Sign up to follow', signup_path, class: "btn btn-lg btn-primary" %>
+    <% end %>
     <% if @user.posts.any? %>
       <h3>Posts (<%= @user.posts.count %>)</h3>
       <ol class="posts">

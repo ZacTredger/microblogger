@@ -3,7 +3,34 @@ require 'test_helper'
 class FollowingTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:FirstUser)
+    @other = users(:FourthUser)
     log_in_as(@user)
+  end
+
+  test 'follows a user with standard request' do
+    assert_difference '@user.following.count', 1 do
+      post relationships_path, params: { followed_id: @other.id }
+    end
+  end
+
+  test 'follows a user with AJAX request' do
+    assert_difference '@user.following.count', 1 do
+      post relationships_path, params: { followed_id: @other.id }, xhr: true
+    end
+  end
+
+  test 'unfollows a user with standard request' do
+    relationship = @user.active_relationships.first
+    assert_difference '@user.following.count', -1 do
+      delete relationship_path(relationship)
+    end
+  end
+
+  test 'unfollows a user with AJAX request' do
+    relationship = @user.active_relationships.first
+    assert_difference '@user.following.count', -1 do
+      delete relationship_path(relationship), xhr: true
+    end
   end
 
   test 'following page' do
