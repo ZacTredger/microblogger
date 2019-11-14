@@ -56,4 +56,11 @@ class FollowingTest < ActionDispatch::IntegrationTest
       assert_select 'a[href=?]', user_path(user)
     end
   end
+
+  test 'homepage feed' do
+    get root_path
+    @user.feed.paginate(page: 1).each do |post|
+      assert_match CGI.escapeHTML(post.content), response.body
+    end
+  end
 end
